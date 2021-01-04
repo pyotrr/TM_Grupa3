@@ -1,5 +1,5 @@
 def calculate_alfa(T, D, S, pH):
-    #Charakterystyka filtra dla odleglosci 1km dźwięku # zmiana1
+    #Charakterystyka filtra dla odleglosci 1km dźwięku # zmiana3
     import math
     import numpy as np
     table = []
