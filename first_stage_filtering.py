@@ -16,7 +16,7 @@ def calculate_alfa(T=6, D=7, S=35, pH=8):
     return ideal_response
 
 
-def prepare_filtering_one(ideal_response, N=50):
+def prepare_filtering_one(ideal_response, N=20):
     import scipy.signal
     import numpy as np
 
