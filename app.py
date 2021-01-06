@@ -1,3 +1,7 @@
-from gui import window, audio_file
+from gui import GUI
+from tkinter import Tk
 
-window.mainloop()
+root = Tk()
+gui_instance = GUI(root)
+
+root.mainloop()
