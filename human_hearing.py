@@ -11,5 +11,4 @@ def lpf(sample_rate,x,cutoff_hz=2000.0, width = 5.0,ripple_db = 18.0):
   taps = firwin(N, cutoff_hz/nyq_rate, window=('kaiser', beta))
   filtered_x = lfilter(taps, 1.0, x)
 
-
   return filtered_x
