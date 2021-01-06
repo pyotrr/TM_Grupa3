@@ -20,7 +20,6 @@ def prepare_filtering_one(ideal_response, N=20):
     import scipy.signal
     import numpy as np
 
-    ideal_response = ideal_response
     ideal_response = 10 ** (-ideal_response / 20)
     ideal_response = ideal_response - ideal_response[-1]
     ideal_response = ideal_response * (1 / ideal_response[0])
