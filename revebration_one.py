@@ -1,6 +1,6 @@
 
 
-def get_rir(audio_signal, fs, rt60=0.2, room_dim =[70, 70, 10], room_source=[35, 35, 7], mic_pos=[35, 60, 7], T=6, D=7, S=35):
+def get_rir(audio_signal, fs, rt60=0.3, room_dim =[20, 20, 12], room_source=[6, 15, 9], mic_pos=[10, 10, 6], T=6, D=7, S=35):
     import pyroomacoustics as pra
     import numpy as np
     c=1449.2+4.6*T-0.055*T**2+0.0029*T**3+(1.34-0.01*T)*(S-35)+0.016*D
@@ -19,5 +19,7 @@ def get_rir(audio_signal, fs, rt60=0.2, room_dim =[70, 70, 10], room_source=[35,
 
 def convolve_rir(audio_signal,rir):
     import numpy as np
+    rir=rir[1000:8000]
     product = np.convolve(audio_signal, rir)
+
     return product
