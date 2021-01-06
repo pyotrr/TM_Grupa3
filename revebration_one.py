@@ -19,5 +19,5 @@ def get_rir(audio_signal, fs, rt60=0.2, room_dim =[70, 70, 10], room_source=[35,
 
 def convolve_rir(audio_signal,rir):
     import numpy as np
-    audio_reverb = np.convolve(audio_signal, rir)
-    return audio_reverb
+    product = np.convolve(audio_signal, rir)
+    return product
