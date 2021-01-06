@@ -30,10 +30,12 @@ def prepare_filtering_one(ideal_response, N):
 
 
     fir = scipy.signal.firwin2(N, freq, ideal_response)
-
     return fir
 
+
+
 def do_filtering(file, fir):
+
     import numpy as np
     import scipy.signal
 
