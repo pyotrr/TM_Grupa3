@@ -1,7 +1,7 @@
 from numpy import cos, sin, pi, absolute, arange
 from scipy.signal import kaiserord, lfilter, firwin, freqz
 
-def lpf(sample_rate,x,cutoff_hz=1000.0, width = 5.0,ripple_db = 18.0):
+def lpf(sample_rate,x,cutoff_hz=2000.0, width = 5.0,ripple_db = 18.0):
 
   nyq_rate = sample_rate / 2.0
   width = width/nyq_rate
