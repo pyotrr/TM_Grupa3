@@ -1,4 +1,4 @@
-def calculate_alfa(T, D, S, pH):
+def calculate_alfa(T=6, D=7, S=35, pH):
     #Charakterystyka filtra dla odleglosci 1km dźwięku # zmiana3
     import math
     import numpy as np
