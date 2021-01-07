@@ -1,4 +1,5 @@
 from gui import GUI
+from gui import GUI
 from tkinter import Tk
 
 root = Tk()
