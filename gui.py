@@ -144,7 +144,7 @@ class GUI:
     def apply_first_filtration(self, event):
         ideal_filter = ff.calculate_alfa()
         fir = ff.prepare_filtering_one(ideal_filter)
-        product = ff.do_filtering(self.audio_file, fir)
+        product = ff.do_filtering(self.audio_file,self.rate, fir)
 
         rir = ro.get_rir(product, self.rate)
         self.filtered_audio_file = abs(ro.convolve_rir(product, rir))
