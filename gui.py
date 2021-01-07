@@ -38,7 +38,7 @@ class GUI:
         self.player_frame = tk.Frame(master)
         self.play_button_text = tk.StringVar()
         self.play_button_text.set('Play')
-        self.play_button = tk.Button(self.player_frame, textvariable=self.play_button_text, name='1')
+        self.play_button = tk.Button(self.player_frame, textvariable=self.play_button_text, name='play_unfiltered')
         self.play_button.bind('<Button-1>', self.play_loaded_audio)
         self.file_name = tk.StringVar()
         self.file_name_label = tk.Label(self.player_frame, textvariable=self.file_name)
@@ -50,11 +50,12 @@ class GUI:
         self.filtered_play_button_text = tk.StringVar()
         self.filtered_play_button_text.set('Play')
         self.filtered_play_button = tk.Button(
-            self.filtered_player_frame, textvariable=self.filtered_play_button_text, name='2'
+            self.filtered_player_frame, textvariable=self.filtered_play_button_text, name='play_filtered'
         )
         self.filtered_save_button = tk.Button(
-            self.filtered_player_frame, text='Save', name='3'
+            self.filtered_player_frame, text='Save', name='save_filtered'
         )
+        self.filtered_save_button.bind('<Button-1>', self.save_to_file)
         self.filtered_play_button.bind('<Button-1>', self.play_loaded_audio)
         self.filtered_file_name = tk.StringVar()
         self.filtered_file_name_label = tk.Label(
@@ -68,11 +69,12 @@ class GUI:
         self.hh_play_button_text = tk.StringVar()
         self.hh_play_button_text.set('Play')
         self.hh_play_button = tk.Button(
-            self.hh_player_frame, textvariable=self.hh_play_button_text, name='4'
+            self.hh_player_frame, textvariable=self.hh_play_button_text, name='play_hh'
         )
         self.hh_save_button = tk.Button(
-            self.hh_player_frame, text='Save', name='5'
+            self.hh_player_frame, text='Save', name='save_hh'
         )
+        self.hh_save_button.bind('<Button-1>', self.save_to_file)
         self.hh_play_button.bind('<Button-1>', self.play_loaded_audio)
         self.hh_file_name = tk.StringVar()
         self.hh_file_name_label = tk.Label(
@@ -117,10 +119,10 @@ class GUI:
 
         player_button = str(event.widget).split('.')[-1]
 
-        if player_button == '1':
+        if player_button == 'play_unfiltered':
             selected_audio_file = self.audio_file
             button_label = self.play_button_text
-        elif player_button == '2':
+        elif player_button == 'play_filtered':
             selected_audio_file = self.filtered_audio_file
             button_label = self.filtered_play_button_text
         else:
@@ -145,7 +147,7 @@ class GUI:
         product = ff.do_filtering(self.audio_file, fir)
 
         rir = ro.get_rir(product, self.rate)
-        self.filtered_audio_file = ro.convolve_rir(product, rir)
+        self.filtered_audio_file = abs(ro.convolve_rir(product, rir))
 
         self.filtered_player_frame.place(relwidth=0.5, relheight=0.05, relx=0.25, rely=0.4)
         self.filtered_file_name.set(self.file_name_label['text'] + ' (filtered)')
@@ -164,4 +166,16 @@ class GUI:
         self.hh_play_button.place(relwidth=0.2, relheight=1, relx=0.6)
         self.hh_save_button.place(relwidth=0.2, relheight=1, relx=0.8)
 
+    def save_to_file(self, event):
+        import scipy.io.wavfile
 
+        save_button = str(event.widget).split('.')[-1]
+        path = tk.filedialog.asksaveasfilename(filetypes=[('WAV Files', '*.wav;*.WAV')])
+
+        if save_button == 'save_filtered':
+            data = self.filtered_audio_file
+        else:
+            data = self.human_hearing
+        if path.endswith('.wav'):
+            scipy.io.wavfile.write(path, self.rate, data)
+        return
