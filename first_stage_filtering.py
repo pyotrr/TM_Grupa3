@@ -33,7 +33,7 @@ def prepare_filtering_one(ideal_response, N=20):
 
 
 
-def do_filtering(file, fir):
+def do_filtering(file, fs, fir):
 
     import numpy as np
     import scipy.signal
@@ -41,7 +41,7 @@ def do_filtering(file, fir):
     a = [1.0, 0]
     b = fir
 
-    w, h = scipy.signal.freqz(b, a)
+    w, h = scipy.signal.freqz(b, a, fs=fs)
 
     product = np.convolve(file, h)
     return product
