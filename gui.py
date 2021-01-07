@@ -147,7 +147,7 @@ class GUI:
         product = ff.do_filtering(self.audio_file, fir)
 
         rir = ro.get_rir(product, self.rate)
-        self.filtered_audio_file = abs(ro.convolve_rir(product, rir))
+        self.filtered_audio_file = (ro.convolve_rir(product, rir)) # usunalem abs
 
         self.filtered_player_frame.place(relwidth=0.5, relheight=0.05, relx=0.25, rely=0.4)
         self.filtered_file_name.set(self.file_name_label['text'] + ' (filtered)')
