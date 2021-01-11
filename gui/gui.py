@@ -1,9 +1,7 @@
 import tkinter.filedialog
 import tkinter as tk
 import simpleaudio as sa
-import first_stage_filtering as ff
-import revebration_one as ro
-import human_hearing as hh
+from dsp import first_stage_filtering as ff, revebration_one as ro, human_hearing as hh, add_noise as an
 
 
 class GUI:
@@ -64,6 +62,9 @@ class GUI:
 
         self.simulate_hh_button = tk.Button(master, text='Simulate human hearing!', name='simulate')
         self.simulate_hh_button.bind('<Button-1>', self.simulate_human_hearing)
+
+        self.cbox_var = tk.IntVar()
+        self.add_noise_cbox = tk.Checkbutton(master, text='Add noise!', variable=self.cbox_var, bg='#b8cbe6')
 
         self.hh_player_frame = tk.Frame(master)
         self.hh_play_button_text = tk.StringVar()
@@ -156,9 +157,15 @@ class GUI:
         self.filtered_save_button.place(relwidth=0.2, relheight=1, relx=0.8)
 
         self.simulate_hh_button.place(relwidth=0.2, relheight=0.05, relx=0.40, rely=0.5)
+        self.add_noise_cbox.place(relx=0.65, rely=0.5)
 
     def simulate_human_hearing(self, event):
         self.human_hearing = hh.lpf(self.rate, self.filtered_audio_file)
+
+        if self.cbox_var.get() == 1:
+            from numpy import loadtxt
+            noise = loadtxt('./data/noise.csv', delimiter=',')
+            self.human_hearing = an.add_noise(self.human_hearing, noise, self.rate)
 
         self.hh_player_frame.place(relwidth=0.5, relheight=0.05, relx=0.25, rely=0.6)
         self.hh_file_name.set(self.file_name_label['text'] + ' (human hearing)')

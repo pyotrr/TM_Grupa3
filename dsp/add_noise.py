@@ -1,7 +1,7 @@
 from scipy import signal
 
 
-def add_noise(data, noise, fs_data, fs_noise):
+def add_noise(data, noise, fs_data, fs_noise=48000):
     import numpy as np
     if fs_noise != fs_data:
         noise = signal.resample(noise, len(data))
