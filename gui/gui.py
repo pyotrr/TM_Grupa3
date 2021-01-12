@@ -134,6 +134,9 @@ class GUI:
         data = data.astype(np.int16)
 
         if event.widget['text'] == 'Play':
+            self.play_button_text.set('Play')
+            self.filtered_play_button_text.set('Play')
+            self.hh_play_button_text.set('Play')
             button_label.set('Stop')
             sa.stop_all()
             play_obj = sa.play_buffer(data, 1, self.bytes_per_sample, self.rate)
@@ -174,7 +177,8 @@ class GUI:
         self.hh_save_button.place(relwidth=0.2, relheight=1, relx=0.8)
 
     def save_to_file(self, event):
-        import scipy.io.wavfile
+        from scipy.io.wavfile import write
+        import numpy as np
 
         save_button = str(event.widget).split('.')[-1]
         path = tk.filedialog.asksaveasfilename(filetypes=[('WAV Files', '*.wav;*.WAV')])
@@ -183,6 +187,9 @@ class GUI:
             data = self.filtered_audio_file
         else:
             data = self.human_hearing
-        if path.endswith('.wav'):
-            scipy.io.wavfile.write(path, self.rate, data)
-        return
+        if path.endswith('.wav') or path.endswith('.WAV'):
+            data = (data * 32767 / max(abs(data)))
+            data = data.astype(np.int16)
+
+            write(path, self.rate, data)
+        return "break"
