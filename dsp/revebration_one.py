@@ -2,7 +2,7 @@
 def get_rir(audio_signal, fs, rt60=0.2, room_dim =[20, 20, 13], room_source=[10, 10, 9], mic_pos=[10, 5, 6], T=6, D=7, S=35):
     import pyroomacoustics as pra
     import numpy as np
-    c=1449.2+4.6*T-0.055*T**2+0.0029*T**3+(1.34-0.01*T)*(S-35)+0.016*D
+    c = 1449.2+4.6*T-0.055*T**2+0.0029*T**3+(1.34-0.01*T)*(S-35)+0.016*D
     e_absorption, max_order = pra.inverse_sabine(rt60, room_dim, c=c)
     room = pra.ShoeBox(
         room_dim, fs=fs, materials=pra.Material(e_absorption), max_order=5
@@ -15,6 +15,7 @@ def get_rir(audio_signal, fs, rt60=0.2, room_dim =[20, 20, 13], room_source=[10,
     room.compute_rir()
     rir = room.rir[0][0]
     return rir
+
 
 def convolve_rir(audio_signal,rir):
     import numpy as np

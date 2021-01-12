@@ -20,7 +20,6 @@ def prepare_filtering_one(ideal_response, N=200):
     import scipy.signal
     import numpy as np
 
-
     ideal_response = -ideal_response
     ideal_response = 10 ** (ideal_response / 20)
     ideal_response = ideal_response - ideal_response[-1]
@@ -28,10 +27,8 @@ def prepare_filtering_one(ideal_response, N=200):
     #Powyżej krótka normalizacja odpowiedzi filtra do funkcji firwin2
     freq = np.linspace(0, 1, len(ideal_response))
 
-
     fir = scipy.signal.firwin2(N, freq, ideal_response)
     return fir
-
 
 
 def do_filtering(file, fir):
@@ -41,6 +38,6 @@ def do_filtering(file, fir):
     a = [1.0, 0]
     b = fir
 
-    product=scipy.signal.lfilter(b,a,file)
+    product = scipy.signal.lfilter(b, a, file)
     return product
 
