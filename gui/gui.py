@@ -187,9 +187,11 @@ class GUI:
             data = self.filtered_audio_file
         else:
             data = self.human_hearing
-        if path.endswith('.wav') or path.endswith('.WAV'):
-            data = (data * 32767 / max(abs(data)))
-            data = data.astype(np.int16)
+        if not path.endswith('.wav') or not path.endswith('.WAV'):
+            path = path + '.wav'
 
-            write(path, self.rate, data)
+        data = (data * 32767 / max(abs(data)))
+        data = data.astype(np.int16)
+
+        write(path, self.rate, data)
         return "break"
