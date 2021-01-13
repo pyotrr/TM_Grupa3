@@ -1,4 +1,4 @@
-from numpy import cos, sin, pi, absolute, arange
+
 from scipy.signal import kaiser_beta, lfilter, firwin, freqz
 
 def lpf(sample_rate,x,cutoff_hz=500.0, attenuation = 25):
@@ -10,5 +10,5 @@ def lpf(sample_rate,x,cutoff_hz=500.0, attenuation = 25):
   cutoff_hz = cutoff_hz
   taps = firwin(N, cutoff_hz/nyq_rate, window=('kaiser', beta))
   filtered_x = lfilter(taps, [1.0,0], x)
-
   return filtered_x
+
