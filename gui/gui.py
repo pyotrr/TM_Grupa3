@@ -164,11 +164,14 @@ class GUI:
 
     def simulate_human_hearing(self, event):
         self.human_hearing = hh.lpf(self.rate, self.filtered_audio_file)
+        import scipy.io.wavfile
+        import os
 
         if self.cbox_var.get() == 1:
-            from numpy import loadtxt
-            noise = loadtxt('./data/noise.csv', delimiter=',')
-            self.human_hearing = an.add_noise(self.human_hearing, noise, self.rate)
+            rate, data = scipy.io.wavfile.read(os.getcwd() + '\\data\\noise_2_mono.wav')
+            data = data / max(abs(data))
+
+            self.human_hearing = an.add_noise(self.human_hearing, data, self.rate)
 
         self.hh_player_frame.place(relwidth=0.5, relheight=0.05, relx=0.25, rely=0.6)
         self.hh_file_name.set(self.file_name_label['text'] + ' (human hearing)')
