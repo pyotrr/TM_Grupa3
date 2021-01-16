@@ -1,4 +1,4 @@
-def calculate_alfa(T=6, D=7, S=35, pH=8):
+def calculate_alfa(T=19, D=0.01, S=35, pH=8):
     import math
     import numpy as np
     table = []
@@ -8,7 +8,7 @@ def calculate_alfa(T=6, D=7, S=35, pH=8):
         if f > 100:
             f = f/1000  # podane w kHz
             alfa = 0.106*((f1*f**2)/(f1**2+f**2))*math.exp((pH-8)/0.56)+0.52*(1+T/43)*(S/35)*((f2*f**2)/(f2**2+f**2))*math.exp(-D/6)+0.00049*f**2*math.exp(-(T/27+D/17))
-            table.append(alfa*50)
+            table.append(alfa*1)
         else:
             alfa = 0
             table.append(alfa)
