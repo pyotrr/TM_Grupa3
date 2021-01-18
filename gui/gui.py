@@ -150,7 +150,12 @@ class GUI:
         fir = ff.prepare_filtering_one(ideal_filter)
         product = ff.do_filtering(self.audio_file, fir)
 
-        rir = ro.get_rir(product, self.rate)
+        import scipy.io.wavfile
+        import os
+
+        rate, rir = scipy.io.wavfile.read(os.getcwd() + '\\data\\impulse_response.wav')
+        rir = rir / max(abs(rir))
+
         self.filtered_audio_file = (ro.convolve_rir(product, rir)) # usunalem abs
 
         self.filtered_player_frame.place(relwidth=0.5, relheight=0.05, relx=0.25, rely=0.4)
