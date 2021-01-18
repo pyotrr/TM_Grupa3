@@ -16,6 +16,6 @@ def add_noise(data, noise, fs_data, fs_noise=48000):
             n_noise -= 1
         noise = long_noise
         noise = noise[range(0, len(data))]
-
+        noise=noise/abs(max((noise)))
     result = 0.995 * data + 0.005 * noise
     return result
